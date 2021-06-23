@@ -341,7 +341,8 @@ tft_initialize <- function(data, config = tft_config()) {
     hidden_layer_size = config$hidden_layer_size,
     dropout_rate = config$dropout_rate,
     stack_size = config$stack_size,
-    num_heads = config$num_heads
+    num_heads = config$num_heads,
+    device=device
   )
 
   # main loop
@@ -409,9 +410,9 @@ tft_train <- function(obj, data, config = tft_config(), epoch_shift=0L) {
   } else if (config$loss == "pinball_loss") {
     config$loss_fn <- pinball_loss(config$training_tau)
   } else if (config$loss == "rmsse_loss") {
-    config$loss_fn <- rmsse_loss()
+    config$loss_fn <- rmsse_loss(device)
   } else if (config$loss == "smape_loss") {
-    config$loss_fn <- smape_loss()
+    config$loss_fn <- smape_loss(device)
   }
 
   # restore network from model and send it to device
